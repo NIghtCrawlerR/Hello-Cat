@@ -30,3 +30,11 @@ export const Image = styled.div`
     `
   };
 `;
+
+export const ParralaxLayer = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+`;

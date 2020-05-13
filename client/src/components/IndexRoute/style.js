@@ -5,6 +5,7 @@ export const Title = styled.h3`
   margin: 30px 0 0;
   font-family: 'Luckiest Guy', cursive;
   font-size: 68px;
+  color: #ed8d39;
   letter-spacing: 2.5px;
 `;
 
