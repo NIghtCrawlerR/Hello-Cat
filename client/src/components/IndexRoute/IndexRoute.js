@@ -1,22 +1,30 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Redirect } from 'react-router';
 
 import CatFacts from '../CatFacts';
 import CatExplore from '../CatExplore';
+import Background from '../Background';
+
+import { Title, Container, LinksWrap, Link } from './style';
 
 const IndexRoute = () => {
   return (
     <Router>
-      <div className="container">
-        <h3 className="main-title">Hello Cats!</h3>
-        <Link to='/'>Cat facts</Link>
-        <Link to='/cat-explore'>Explore cats</Link>
+      <Background />
+      <Container>
+        <Title>Hello Cats!</Title>
+        <LinksWrap>
+          <Link to='/cat-facts'>Cat facts</Link>
+          <Link to='/cat-explore'>Explore cats</Link>
+        </LinksWrap>
 
         <Switch>
-          <Route exact path="/" component={CatFacts} />
+          <Route path="/cat-facts" component={CatFacts} />
           <Route path="/cat-explore" component={CatExplore} />
+          <Redirect to="/cat-facts" />
         </Switch>
-      </div>
+      </Container>
     </Router>
   );
 }
