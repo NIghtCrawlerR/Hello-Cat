@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import { MainButton } from '../../shared/style';
+import { MainButton, MainWrap } from '../../shared/style';
 
-export const Wrap = styled.div`
+export const Container = styled.div`
   width: 50%;
-  margin-top: 30px;
   padding: 20px;
   overflow: hidden;
 
@@ -12,14 +11,9 @@ export const Wrap = styled.div`
   }
 `;
 
-export const FactsWrap = styled.div`
+export const Wrap = styled(MainWrap)`
   max-height: 75%;
   overflow-y: auto;
-  padding: 30px;
-  border: 1px solid #cecece;
-  border-radius: 4px;
-  box-shadow: 0 0 15px 5px rgba(83, 67, 53, .24);
-  background: rgba(255, 255, 255, .8);
 
   &::-webkit-scrollbar {
     width: 6px;

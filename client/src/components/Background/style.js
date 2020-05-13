@@ -29,6 +29,11 @@ export const Image = styled.div`
       transform: rotate(${props.rotate}deg);
     `
   };
+
+  @media screen and (max-width: 768px) {
+    width: ${props => (props.width || props.size) / 2 || 100}px;
+    height: ${props => (props.height || props.size) / 2 || 100}px;
+  }
 `;
 
 export const ParralaxLayer = styled.div`

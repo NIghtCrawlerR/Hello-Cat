@@ -7,6 +7,10 @@ export const Title = styled.h3`
   font-size: 68px;
   color: #ed8d39;
   letter-spacing: 2.5px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 54px;
+  }
 `;
 
 export const Container = styled.div`
@@ -34,7 +38,7 @@ export const Link = styled(ReactLink)`
   text-transform: uppercase;
   text-decoration: none;
   font-weight: 500;
-  background: transparent;
+  background: rgba(255, 255, 255, .7);
   color: #e85d1b;
   border: 2px solid #e85c1a;
 
@@ -43,5 +47,11 @@ export const Link = styled(ReactLink)`
     background-image: linear-gradient(to right,#fc6076,#ff9a44,#ef9d43,#e75516);
     box-shadow: 0 4px 15px 0 rgba(252,104,110,0.75);
     border: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    min-width: 140px;
+    padding: 10px 20px;
+    font-size: 14px;
   }
 `;

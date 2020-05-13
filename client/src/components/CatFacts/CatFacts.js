@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { Wrap, FactsWrap, BubbleLeft, BubbleRight, Button } from './style';
+import { Container, Wrap, BubbleLeft, BubbleRight, Button } from './style';
 
 const FACTS_API_URL = 'https://cat-fact.herokuapp.com/facts';
 const MAX_SIZE = 7;
@@ -54,20 +54,19 @@ const CatFacts = () => {
     setRandomFacts(randomFacts);
   }
 
-  if (loading) return 'Loading...';
-
   return (
-    <Wrap>
-      <FactsWrap>
-        {(randomFacts || []).map((fact, i) => {
+    <Container>
+      <Wrap>
+        {loading && 'Loading...'}
+        {!loading && (randomFacts || []).map((fact, i) => {
           return i % 2 === 0
             ? <BubbleLeft key={fact._id}>{fact.text}</BubbleLeft>
             : <BubbleRight key={fact._id}>{fact.text}</BubbleRight>
         })}
-      </FactsWrap>
+      </Wrap>
 
       <Button onClick={getRandomFacts}>Show other facts</Button>
-    </Wrap>
+    </Container>
   );
 }
 

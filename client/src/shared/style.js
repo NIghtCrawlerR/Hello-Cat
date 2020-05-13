@@ -26,3 +26,11 @@ export const MainButton = styled.button`
     outline: none;
   }
 `;
+
+export const MainWrap = styled.div`
+  padding: 30px;
+  border: 1px solid #cecece;
+  border-radius: 4px;
+  box-shadow: 0 0 15px 5px rgba(83, 67, 53, .24);
+  background: rgba(255, 255, 255, .8);
+`;
