@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ReactSelect from 'react-select';
 
 import { MainWrap } from '../../shared/style';
 
@@ -37,10 +38,23 @@ export const Image = styled.img`
   object-fit: cover;
 `;
 
-export const Title = styled.h3`
+export const Title = styled.a`
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-bottom: 3px solid #167ebb;
   font-size: 28px;
+  font-weight: 700;
+  color: #167ebb;
+  text-decoration: none;
 `;
 
 export const Bold = styled.span`
   font-weight: 600;
+`;
+
+export const Select = styled(ReactSelect)`
+  & > div {
+    cursor: pointer;
+  }
 `;
