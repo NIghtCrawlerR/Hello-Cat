@@ -15,6 +15,7 @@
     "react-select": "^3.1.0",
     "styled-components": "^5.1.0"
   },
+  "proxy": "https://hello-cat.herokuapp.com/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

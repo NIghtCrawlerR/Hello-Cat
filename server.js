@@ -177,9 +177,14 @@ bot.onText(/\/getfact/, (msg) => {
     });
 });
 
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 // Connect DB
-mongoClient.connect(DB_URL, (err, client) => {
+mongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
   if (err) console.log(err);
   db = client.db('hello-cat');
   startTimer();
