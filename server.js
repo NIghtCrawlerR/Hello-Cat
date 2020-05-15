@@ -5,7 +5,11 @@ const isEqual = require('lodash/isEqual');
 const mongoClient = require('mongodb').MongoClient;
 const TelegramBot = require('node-telegram-bot-api');
 
-require('dotenv').config();
+const prod = process.env.NODE_ENV === 'production';
+if (propd) {
+  require('dotenv').config();
+}
+
 
 const DB_URL = process.env.DB_URL;
 const PORT = process.env.PORT || 5000;
