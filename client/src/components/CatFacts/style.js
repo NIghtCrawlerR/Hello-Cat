@@ -7,7 +7,8 @@ export const Container = styled.div`
   overflow: hidden;
 
   @media screen and (max-width: 768px) {
-    width: 100%; 
+    width: 100%;
+    overflow: visible; 
   }
 `;
 
@@ -17,6 +18,8 @@ export const Wrap = styled(MainWrap)`
 
   @media screen and (max-width: 768px) {
     max-height: 65%;
+    max-height: 100%;
+    overflow-y: visible;
   }
 
   &::-webkit-scrollbar {
