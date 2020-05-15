@@ -15,6 +15,10 @@ export const Wrap = styled(MainWrap)`
   max-height: 75%;
   overflow-y: auto;
 
+  @media screen and (max-width: 768px) {
+    max-height: 65%;
+  }
+
   &::-webkit-scrollbar {
     width: 6px;
     border-radius: 2px;
@@ -36,6 +40,12 @@ export const Bubble = styled.div`
   margin: 20px 0;
   padding: 8px 15px;
   border-radius: 20px;
+  font-size: 16px;
+
+  @media screen and (max-width: 768px) {
+    margin: 15px 0;
+    font-size: 14px;
+  }
 
   &::before {
     content: "";
@@ -96,7 +106,18 @@ export const BubbleRight = styled(Bubble)`
   }
 `;
 
-export const Button = styled(MainButton)`
-  display: block;
+export const ButonsWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   margin: 30px auto 50px auto;
+`;
+
+export const TelegramLogo = styled.img`
+  max-width: 36px;
+  margin-left: 8px;
+
+  @media screen and (max-width: 768px) {
+    max-width: 20px;
+  }
 `;

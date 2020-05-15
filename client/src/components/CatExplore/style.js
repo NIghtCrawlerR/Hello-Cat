@@ -42,11 +42,15 @@ export const Title = styled.a`
   display: inline-block;
   margin-top: 20px;
   margin-bottom: 10px;
-  border-bottom: 3px solid #167ebb;
+  border-bottom: 3px solid #e75718;
   font-size: 28px;
   font-weight: 700;
-  color: #167ebb;
+  color: #e75718;
   text-decoration: none;
+
+  @media screen and (max-width: 768px) {
+    font-size: 22px;
+  }
 `;
 
 export const Bold = styled.span`
@@ -57,4 +61,10 @@ export const Select = styled(ReactSelect)`
   & > div {
     cursor: pointer;
   }
+`;
+
+export const Label = styled.p`
+  margin: 10px 0 5px 0;
+  font-size: 16px;
+  font-weight: 600;
 `;

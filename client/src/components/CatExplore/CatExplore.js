@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import BreedInfo from './BreedInfo';
-import { Wrap, Select } from './style';
+import { Wrap, Select, Label } from './style';
 
 const CAT_BREEDS_URL = 'https://api.thecatapi.com/v1/breeds';
 const BREED_IMAGES_URL = 'https://api.thecatapi.com/v1/images/search';
@@ -78,7 +78,7 @@ const CatExplore = () => {
 
   return (
     <Wrap>
-      <h3>Select cat breed:</h3>
+      <Label>Select cat breed:</Label>
       <Select
         value={currentBreed}
         onChange={(breed) => setCurrentBreed(breed)}

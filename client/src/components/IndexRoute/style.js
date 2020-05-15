@@ -9,7 +9,8 @@ export const Title = styled.h3`
   letter-spacing: 2.5px;
 
   @media screen and (max-width: 768px) {
-    font-size: 54px;
+    margin-top: 20px;
+    font-size: 46px;
   }
 `;
 
@@ -27,11 +28,19 @@ export const Container = styled.div`
 
 export const LinksWrap = styled.div`
   display: flex;
-  margin: 40px 0 40px 0;
+  margin: 40px 0;
+
+  @media screen and (max-width: 768px) {
+    margin: 20px 0;
+  }
 `;
 
 export const Link = styled(ReactLink)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: 160px;
+  height: 45px;
   margin: 0 15px;
   padding: 15px 25px;
   text-align: center;
@@ -51,7 +60,8 @@ export const Link = styled(ReactLink)`
 
   @media screen and (max-width: 768px) {
     min-width: 140px;
-    padding: 10px 20px;
+    height: 35px;
+    padding: 5px 20px;
     font-size: 14px;
   }
 `;

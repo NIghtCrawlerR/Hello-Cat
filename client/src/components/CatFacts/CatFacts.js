@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { Container, Wrap, BubbleLeft, BubbleRight, Button } from './style';
+import {
+  Container,
+  Wrap,
+  BubbleLeft,
+  BubbleRight,
+  ButonsWrap,
+  TelegramLogo,
+} from './style';
+import { TelegramButton, MainButton } from '../../shared/style';
 
+const TELEGRAM_LOGO = require('../../assets/images/telegram.png');
 const FACTS_API_URL = 'https://cat-fact.herokuapp.com/facts';
 const MAX_SIZE = 7;
 
@@ -65,7 +74,15 @@ const CatFacts = () => {
         })}
       </Wrap>
 
-      <Button onClick={getRandomFacts}>Show other facts</Button>
+      <ButonsWrap>
+        <MainButton onClick={getRandomFacts}>Show other facts</MainButton>
+        {/* <a href="t.me/HelloCatsBot"> */}
+          <TelegramButton onClick={() => window.open('https://t.me/HelloCatsBot', '_blank')}>
+            Subscribe
+          <TelegramLogo src={TELEGRAM_LOGO} alt="telegram bot" />
+          </TelegramButton>
+        {/* </a> */}
+      </ButonsWrap>
     </Container>
   );
 }
