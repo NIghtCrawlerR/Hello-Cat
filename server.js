@@ -1,12 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const path = require('path');
 const isEqual = require('lodash/isEqual');
 const mongoClient = require('mongodb').MongoClient;
 const TelegramBot = require('node-telegram-bot-api');
 
 const prod = process.env.NODE_ENV === 'production';
-if (propd) {
+if (!prod) {
   require('dotenv').config();
 }
 
