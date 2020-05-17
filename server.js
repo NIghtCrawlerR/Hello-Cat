@@ -23,6 +23,10 @@ let db;
 // Init app
 const app = express();
 
+app.get('/', (req, res) => {
+  return res.send('Hello Cats!');
+});
+
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
