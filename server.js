@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const path = require('path');
-const isEqual = require('lodash/isEqual');
+const cron = require('node-cron');
 const mongoClient = require('mongodb').MongoClient;
 const TelegramBot = require('node-telegram-bot-api');
 
@@ -30,17 +30,15 @@ app.get('/', (req, res) => {
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Run cron job every day at 10:15
+cron.schedule('15 15 * * *', () => {
+  sendMessages();
+});
+
 // Telegram bot
 const bot = new TelegramBot(token, { polling: true });
 
 const UNSUBSCRIBE_PHOTO = './assets/images/grumpy.jpg';
-const MESSAGE_TIME = {
-  // day: 1, // Monday, 10:15
-  hours: 11,
-  minutes: 15,
-};
-
-let interval = null;
 
 const getRandomFact = async () => {
   const requestFact = {
@@ -65,15 +63,6 @@ const getRandomFact = async () => {
   return data;
 };
 
-const getTime = () => {
-  const date = new Date();
-  const day = date.getDay();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-
-  return { hours, minutes };
-};
-
 const sendMessages = () => {
   db.collection('subscribers').find().toArray((err, users) => {
     getRandomFact()
@@ -84,26 +73,6 @@ const sendMessages = () => {
       });
   });
 };
-
-const checkTime = () => {
-  const currentTime = getTime();
-  const isTimeEqual = isEqual(currentTime, MESSAGE_TIME);
-
-  if (isTimeEqual) {
-    sendMessages();
-    clearInterval(interval);
-
-    setTimeout(() => {
-      startTimer();
-    }, 300000);
-  }
-};
-
-const startTimer = () => {
-  interval = setInterval(() => {
-    checkTime();
-  }, 5000);
-}
 
 bot.on("polling_error", (err) => console.log(err));
 
@@ -196,7 +165,6 @@ app.get('*', (req, res) => {
 mongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
   if (err) console.log(err);
   db = client.db('hello-cat');
-  startTimer();
 
   // Start app
   app.listen(PORT, function () {
