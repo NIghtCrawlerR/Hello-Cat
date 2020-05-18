@@ -1,25 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const axios = require('axios');
 const path = require('path');
 const cron = require('node-cron');
-const mongoClient = require('mongodb').MongoClient;
 const TelegramBot = require('node-telegram-bot-api');
+
+const helpers = require('./helpers');
+const mongo = require('./dbConnection');
 
 const prod = process.env.NODE_ENV === 'production';
 if (!prod) {
   require('dotenv').config();
 }
 
-
-const DB_URL = process.env.DB_URL;
 const PORT = process.env.PORT || 5000;
 const token = process.env.BOT_KEY;
-const FACTS_API = process.env.FACTS_API;
-const CAT_IMAGE_API = process.env.CAT_IMAGE_API;
 
+// const db = mongo.getDb();
 let db;
-
 // Init app
 const app = express();
 
@@ -40,32 +37,9 @@ const bot = new TelegramBot(token, { polling: true });
 
 const UNSUBSCRIBE_PHOTO = './assets/images/grumpy.jpg';
 
-const getRandomFact = async () => {
-  const requestFact = {
-    url: FACTS_API,
-    method: 'get',
-  };
-
-  const requestImage = {
-    url: CAT_IMAGE_API,
-    method: 'get',
-  };
-
-  const data = await Promise.all([axios(requestFact), axios(requestImage)])
-    .then((res) => {
-      const [resFact, resImage] = res;
-      const { data: { fact } } = resFact;
-      const { data: { 0: { url } } } = resImage;
-
-      return { fact, url };
-    });
-
-  return data;
-};
-
 const sendMessages = () => {
   db.collection('subscribers').find().toArray((err, users) => {
-    getRandomFact()
+    helpers.getRandomFact()
       .then(({ fact, url }) => {
         users.map(({ id }) => {
           bot.sendPhoto(id, url, { caption: fact });
@@ -87,7 +61,7 @@ bot.on('callback_query', (msg) => {
   }
 
   if (data === 'getfact') {
-    getRandomFact()
+    helpers.getRandomFact()
       .then(({ fact, url }) => {
         bot.sendPhoto(chat.id, url, { caption: fact });
       });
@@ -117,7 +91,7 @@ const subscribe = (chatData) => {
     } else {
       db.collection('subscribers').insertOne({ id, first_name, last_name, username }, () => {
         bot.sendMessage(id, 'Now you will receive awesom cat facts every week! Here is your first one :)');
-        getRandomFact()
+        helpers.getRandomFact()
           .then(({ fact, url }) => {
             bot.sendPhoto(id, url, { caption: fact });
           });
@@ -149,7 +123,7 @@ bot.onText(/\/unsubscribe/, (msg) => {
 bot.onText(/\/getfact/, (msg) => {
   const id = msg.chat.id;
 
-  getRandomFact()
+  helpers.getRandomFact()
     .then(({ fact, url }) => {
       bot.sendPhoto(id, url, { caption: fact });
     });
@@ -162,9 +136,10 @@ app.get('*', (req, res) => {
 });
 
 // Connect DB
-mongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
+mongo.connect((err, client) => {
   if (err) console.log(err);
-  db = client.db('hello-cat');
+
+  db = mongo.getDb();
 
   // Start app
   app.listen(PORT, function () {
