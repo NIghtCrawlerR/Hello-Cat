@@ -35,9 +35,9 @@ const bot = new TelegramBot(token, { polling: true });
 
 const UNSUBSCRIBE_PHOTO = './assets/images/grumpy.jpg';
 const MESSAGE_TIME = {
-  day: 1, // Monday, 10:01
-  hours: 10,
-  minutes: 1,
+  // day: 1, // Monday, 10:15
+  hours: 11,
+  minutes: 15,
 };
 
 let interval = null;
@@ -71,7 +71,7 @@ const getTime = () => {
   const hours = date.getHours();
   const minutes = date.getMinutes();
 
-  return { day, hours, minutes };
+  return { hours, minutes };
 };
 
 const sendMessages = () => {
@@ -102,7 +102,7 @@ const checkTime = () => {
 const startTimer = () => {
   interval = setInterval(() => {
     checkTime();
-  }, 2000);
+  }, 5000);
 }
 
 bot.on("polling_error", (err) => console.log(err));
