@@ -14,7 +14,7 @@ let db;
 // Init app
 const app = express();
 
-app.get('/', (req, res) => {
+app.get('/ping', (req, res) => {
   return res.send('Ping!');
 });
 
