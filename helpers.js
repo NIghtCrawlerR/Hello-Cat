@@ -1,12 +1,7 @@
 const axios = require('axios');
+const constants = require('./constants');
 
-const prod = process.env.NODE_ENV === 'production';
-if (!prod) {
-  require('dotenv').config();
-}
-
-const FACTS_API = process.env.FACTS_API;
-const CAT_IMAGE_API = process.env.CAT_IMAGE_API;
+const { FACTS_API, CAT_IMAGE_API } = constants;
 
 const getRandomFact = async () => {
   const requestFact = {

@@ -3,24 +3,19 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const TelegramBot = require('node-telegram-bot-api');
 
+const constants = require('./constants');
 const helpers = require('./helpers');
 const mongo = require('./dbConnection');
 
-const prod = process.env.NODE_ENV === 'production';
-if (!prod) {
-  require('dotenv').config();
-}
+const { TOKEN, PORT, UNSUBSCRIBE_PHOTO } = constants;
 
-const PORT = process.env.PORT || 5000;
-const token = process.env.BOT_KEY;
-
-// const db = mongo.getDb();
 let db;
+
 // Init app
 const app = express();
 
 app.get('/', (req, res) => {
-  return res.send('Hello Cats!');
+  return res.send('Ping!');
 });
 
 app.get('/daily-message', (req, res) => {
@@ -31,11 +26,8 @@ app.get('/daily-message', (req, res) => {
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 // Telegram bot
-const bot = new TelegramBot(token, { polling: true });
-
-const UNSUBSCRIBE_PHOTO = './assets/images/grumpy.jpg';
+const bot = new TelegramBot(TOKEN, { polling: true });
 
 const sendMessages = () => {
   db.collection('subscribers').find().toArray((err, users) => {
