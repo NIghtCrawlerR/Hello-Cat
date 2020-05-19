@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const cron = require('node-cron');
 const TelegramBot = require('node-telegram-bot-api');
 
 const helpers = require('./helpers');
@@ -24,13 +23,14 @@ app.get('/', (req, res) => {
   return res.send('Hello Cats!');
 });
 
+app.get('/daily-message', (req, res) => {
+  sendMessages();
+  return res.send('Daily message was sent!');
+});
+
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Run cron job every day at 10:15
-cron.schedule('15 15 * * *', () => {
-  sendMessages();
-});
 
 // Telegram bot
 const bot = new TelegramBot(token, { polling: true });
@@ -76,7 +76,7 @@ bot.onText(/\/start/, (msg) => {
     [{ text: 'Get fact about cats', callback_data: 'getfact' }]
   ]
 
-  bot.sendMessage(id, 'Meow! Subscribe to get weekly cat facts. 🐱', { reply_markup: { inline_keyboard: keyboard } })
+  bot.sendMessage(id, 'Meow! Subscribe to get daily cat facts. 🐱', { reply_markup: { inline_keyboard: keyboard } })
 });
 
 
@@ -90,7 +90,7 @@ const subscribe = (chatData) => {
       bot.sendMessage(id, 'You already subscribed!');
     } else {
       db.collection('subscribers').insertOne({ id, first_name, last_name, username }, () => {
-        bot.sendMessage(id, 'Now you will receive awesom cat facts every week! Here is your first one :)');
+        bot.sendMessage(id, 'Now you will receive awesom cat facts every day! Here is your first one :)');
         helpers.getRandomFact()
           .then(({ fact, url }) => {
             bot.sendPhoto(id, url, { caption: fact });
@@ -115,7 +115,7 @@ bot.onText(/\/unsubscribe/, (msg) => {
         bot.sendPhoto(id, UNSUBSCRIBE_PHOTO, { caption: 'Big deal...' });
       })
     } else {
-      bot.sendMessage(id, 'You are not subscribed to weekly cat facts. Want to /subscribe ?');
+      bot.sendMessage(id, 'You are not subscribed to daily cat facts. Want to /subscribe ?');
     }
   });
 });
