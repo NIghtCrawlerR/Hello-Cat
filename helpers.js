@@ -21,6 +21,8 @@ const getRandomFact = async () => {
       const { data: { 0: { url } } } = resImage;
 
       return { fact, url };
+    }).catch(err => {
+      return { fact: 'Something went wrong' };
     });
 
   return data;

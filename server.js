@@ -32,9 +32,13 @@ const bot = new TelegramBot(TOKEN, { polling: true });
 const sendMessages = () => {
   db.collection('subscribers').find().toArray((err, users) => {
     helpers.getRandomFact()
-      .then(({ fact, url }) => {
+      .then(({ status, fact, url }) => {
         users.map(({ id }) => {
-          bot.sendPhoto(id, url, { caption: fact });
+          if (status === 200) {
+            bot.sendPhoto(id, url, { caption: fact });
+          } else {
+            console.log('Something went wrong');
+          }
         });
       });
   });

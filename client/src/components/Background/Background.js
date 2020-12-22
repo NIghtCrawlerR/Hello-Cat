@@ -27,7 +27,7 @@ const Background = () => {
       <ParralaxLayer data-depth="0.2">
         <Image src={CAT_1} rotate="-15" top="10%" left="20%" size="300" />
         <Image src={CAT_3} rotate="-30" bottom="35%" right="5%" />
-        <Image src={CAT_7} rotate="0" right="5%" bottom="0" />
+        <Image src={CAT_7} rotate="0" right="5%" bottom="0" width={200} height={270} />
       </ParralaxLayer>
       <ParralaxLayer data-depth="0.4">
         <Image src={CAT_2} rotate="-90" top="20%" right="0" />
@@ -36,7 +36,7 @@ const Background = () => {
         <Image src={CAT_9} rotate="180" top="0" left="5%" width="200" height="150" />
       </ParralaxLayer>
       <ParralaxLayer data-depth="0.6">
-        <Image src={CAT_4} rotate="40" right="20%" top="8%" size="300" />
+        <Image src={CAT_4} rotate="40" right="20%" top="8%" width="300" height={400} />
         <Image src={CAT_5} rotate="0" left="5%" top="30%" size="300" />
         <Image src={CAT_5} rotate="-130" right="20%" bottom="20%" />
         <Image src={CAT_8} rotate="90" left="0" bottom="10%" size="250" />
