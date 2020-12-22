@@ -12,9 +12,13 @@ let _db;
 module.exports = {
   connect: (callback) => {
     mongoClient.connect(DB_URL, { useNewUrlParser: true }, (err, client) => {
-      _db = client.db('hello-cat');
+      if (err) {
+        console.error('An error occurred connecting to MongoDB: ', err);
+      } else {
+        _db = client.db('hello-cat');
 
-      return callback(err, client);
+        return callback(err, client);
+      }
     });
   },
 
