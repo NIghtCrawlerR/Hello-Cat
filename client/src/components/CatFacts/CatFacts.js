@@ -12,76 +12,51 @@ import {
 import { TelegramButton, MainButton } from '../../shared/style';
 
 const TELEGRAM_LOGO = require('../../assets/images/telegram.png');
-const FACTS_API_URL = 'https://cat-fact.herokuapp.com/facts';
-const MAX_SIZE = 7;
+const FACTS_API_URL = 'https://catfact.ninja/facts';
 
 const CatFacts = () => {
   const [allFacts, setFacts] = useState([]);
-  const [previousFacts, setPreviousFacts] = useState([]);
-  const [randomFacts, setRandomFacts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  const getFacts = (limit = 10) => {
     setLoading(true);
 
     const request = {
-      url: FACTS_API_URL,
+      url: `${FACTS_API_URL}?limit=${limit}`,
       method: 'get',
     };
 
     axios(request)
       .then(({ data }) => {
-        setFacts(data.all);
+        setFacts(data.data);
         setLoading(false);
       })
       .catch(() => {
         setLoading(false);
-      })
-  }, []);
+      });
+  }
 
   useEffect(() => {
-    getRandomFacts();
-  }, [allFacts]);
-
-  const getRandomFacts = () => {
-    if (allFacts.length === 0) return false;
-
-    const indexArr = [];
-
-    while (indexArr.length < MAX_SIZE) {
-      const random = Math.floor(Math.random() * allFacts.length) + 1;
-
-      if (!indexArr.includes(random)
-        && !previousFacts.includes(random)) {
-        indexArr.push(random)
-      };
-    }
-
-    const randomFacts = allFacts.filter((fact, i) => indexArr.includes(i));
-
-    setPreviousFacts([...previousFacts, indexArr])
-    setRandomFacts(randomFacts);
-  }
+    getFacts();
+  }, []);
 
   return (
     <Container>
       <Wrap>
         {loading && 'Loading...'}
-        {!loading && (randomFacts || []).map((fact, i) => {
+        {!loading && (allFacts || []).map(({ fact }, i) => {
           return i % 2 === 0
-            ? <BubbleLeft key={fact._id}>{fact.text}</BubbleLeft>
-            : <BubbleRight key={fact._id}>{fact.text}</BubbleRight>
+            ? <BubbleLeft key={i}>{fact}</BubbleLeft>
+            : <BubbleRight key={i}>{fact}</BubbleRight>
         })}
       </Wrap>
 
       <ButonsWrap>
-        <MainButton onClick={getRandomFacts}>Show other facts</MainButton>
-        {/* <a href="t.me/HelloCatsBot"> */}
-          <TelegramButton onClick={() => window.open('https://t.me/HelloCatsBot', '_blank')}>
-            Subscribe
+        <MainButton onClick={() => getFacts()}>Show other facts</MainButton>
+        <TelegramButton onClick={() => window.open('https://t.me/HelloCatsBot', '_blank')}>
+          Subscribe
           <TelegramLogo src={TELEGRAM_LOGO} alt="telegram bot" />
-          </TelegramButton>
-        {/* </a> */}
+        </TelegramButton>
       </ButonsWrap>
     </Container>
   );
